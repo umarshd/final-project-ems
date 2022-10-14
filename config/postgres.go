@@ -14,8 +14,28 @@ import (
 var DB *gorm.DB
 var err error
 
+type (
+	dsn struct {
+		Host     string
+		User     string
+		Password string
+		Dbname   string
+		Port     string
+	}
+)
+
 func Database() {
-	DB, err = gorm.Open(postgres.Open(os.Getenv("db_url")), &gorm.Config{})
+
+	dsn := dsn{
+		Host:     os.Getenv("PGHOST"),
+		User:     os.Getenv("PGUSER"),
+		Password: os.Getenv("PGPASSWORD"),
+		Dbname:   os.Getenv("PGDATABASE"),
+		Port:     os.Getenv("PGPORT"),
+	}
+
+	db_url := "host=" + dsn.Host + " user=" + dsn.User + " password=" + dsn.Password + " dbname=" + dsn.Dbname + " port=" + dsn.Port
+	DB, err = gorm.Open(postgres.Open(db_url), &gorm.Config{})
 
 	if err != nil {
 		panic(err)
