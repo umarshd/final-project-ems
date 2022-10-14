@@ -1,0 +1,686 @@
+basePath: /api/v1
+definitions:
+  entity.Cart:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_checkout:
+        type: boolean
+      total:
+        type: integer
+      updated_at:
+        type: string
+      user:
+        $ref: '#/definitions/entity.User'
+      user_id:
+        type: string
+    type: object
+  entity.CartItem:
+    properties:
+      cart:
+        $ref: '#/definitions/entity.Cart'
+      cart_id:
+        type: integer
+      created_at:
+        type: string
+      id:
+        type: integer
+      product:
+        $ref: '#/definitions/entity.Product'
+      product_id:
+        type: integer
+      quantity:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  entity.ErrorResponse:
+    properties:
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+  entity.Product:
+    properties:
+      category_id:
+        type: integer
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      image_url:
+        type: string
+      name:
+        type: string
+      price:
+        type: string
+      product_category:
+        $ref: '#/definitions/entity.ProductCategory'
+      quantity:
+        type: integer
+      sku:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  entity.ProductCategory:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  entity.RequestAdmin:
+    properties:
+      email:
+        type: string
+      nama:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - nama
+    - password
+    type: object
+  entity.RequestCartItem:
+    properties:
+      cart_id:
+        type: integer
+      product_id:
+        type: integer
+      quantity:
+        type: integer
+    required:
+    - cart_id
+    - product_id
+    - quantity
+    type: object
+  entity.RequestCheckout:
+    properties:
+      cart_id:
+        type: integer
+      image_url:
+        type: string
+      user_id:
+        type: string
+    required:
+    - cart_id
+    - image_url
+    - user_id
+    type: object
+  entity.RequestLoginAdmin:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  entity.RequestLoginUser:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  entity.RequestProduct:
+    properties:
+      category_id:
+        type: integer
+      description:
+        type: string
+      image_url:
+        type: string
+      name:
+        type: string
+      price:
+        type: string
+      quantity:
+        type: integer
+      sku:
+        type: string
+    required:
+    - category_id
+    - description
+    - image_url
+    - name
+    - price
+    - quantity
+    - sku
+    type: object
+  entity.RequestProductCategory:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    required:
+    - description
+    - name
+    type: object
+  entity.RequestUser:
+    properties:
+      email:
+        type: string
+      gender:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+    required:
+    - email
+    - gender
+    - name
+    - password
+    - phone
+    type: object
+  entity.ResponseAdmin:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      nama:
+        type: string
+      uid:
+        type: string
+    type: object
+  entity.ResponseAdminLogin:
+    properties:
+      token:
+        type: string
+    type: object
+  entity.ResponseCheckout:
+    properties:
+      id:
+        type: string
+    type: object
+  entity.ResponseProduct:
+    properties:
+      category_id:
+        type: integer
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      image_url:
+        type: string
+      name:
+        type: string
+      price:
+        type: string
+      quantity:
+        type: integer
+      sku:
+        type: string
+    type: object
+  entity.ResponseProductCategory:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  entity.ResponseUser:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      gender:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      uid:
+        type: string
+    type: object
+  entity.ResponseUserLogin:
+    properties:
+      token:
+        type: string
+    type: object
+  entity.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      profile:
+        $ref: '#/definitions/entity.UserProfile'
+      profile_id:
+        type: integer
+      uid:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  entity.UserProfile:
+    properties:
+      created_at:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      phone:
+        type: string
+      updated_at:
+        type: string
+    type: object
+info:
+  contact:
+    email: '"umarhshid@gmail.com"'
+    name: '"Umar Sahid"'
+  description: This is the documentation for the Final Project ECommerce System API
+  title: Final Project ECommerce System API Documentation
+  version: 1.0.0
+paths:
+  /admin/login:
+    post:
+      consumes:
+      - application/json
+      description: Login Admin
+      parameters:
+      - description: Login Admin
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/entity.RequestLoginAdmin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.ResponseAdminLogin'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: Login Admin
+      tags:
+      - Admin
+  /admin/register:
+    post:
+      consumes:
+      - application/json
+      description: Create Admin
+      parameters:
+      - description: Create Admin
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/entity.RequestAdmin'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.ResponseAdmin'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: Create Admin
+      tags:
+      - Admin
+  /carts:
+    get:
+      consumes:
+      - application/json
+      description: Get All Cart By User
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Cart'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: Get All Cart By User
+      tags:
+      - Cart
+    post:
+      consumes:
+      - application/json
+      description: Create Cart
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.Cart'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: Create Cart
+      tags:
+      - Cart
+  /carts/items:
+    post:
+      consumes:
+      - application/json
+      description: Create Cart Item
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Create Cart Item
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/entity.RequestCartItem'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.CartItem'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: Create Cart Item
+      tags:
+      - Cart
+  /product-category:
+    get:
+      consumes:
+      - application/json
+      description: Get All Product Category
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.ResponseProductCategory'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: Get All Product Category
+      tags:
+      - Product Category
+    post:
+      consumes:
+      - application/json
+      description: Create Product Category
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: Create Product Category
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/entity.RequestProductCategory'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.ResponseProductCategory'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: Create Product Category
+      tags:
+      - Product Category
+  /products:
+    get:
+      consumes:
+      - application/json
+      description: Get All Product
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.ResponseProduct'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: Get All Product
+      tags:
+      - Product
+    post:
+      consumes:
+      - application/json
+      description: Create Product
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: authorization
+        required: true
+        type: string
+      - description: Create Product
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/entity.RequestProduct'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.ResponseProduct'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: Create Product
+      tags:
+      - Product
+  /products/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get Product By ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.ResponseProduct'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: Get Product By ID
+      tags:
+      - Product
+  /products/filter:
+    get:
+      consumes:
+      - application/json
+      description: Filter Product
+      parameters:
+      - description: Category ID
+        in: query
+        name: category
+        type: integer
+      - description: Price Min
+        in: query
+        name: priceMin
+        type: integer
+      - description: Price Max
+        in: query
+        name: priceMax
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.ResponseProduct'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: Filter Product
+      tags:
+      - Product
+  /users/checkout:
+    post:
+      consumes:
+      - application/json
+      description: Create Checkout
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Create Checkout
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/entity.RequestCheckout'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.ResponseCheckout'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: Create Checkout
+      tags:
+      - Checkout
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: Login User
+      parameters:
+      - description: Login User
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/entity.RequestLoginUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.ResponseUserLogin'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: Login User
+      tags:
+      - User
+  /users/register:
+    post:
+      consumes:
+      - application/json
+      description: Create User
+      parameters:
+      - description: Create User
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/entity.RequestUser'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.ResponseUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.ErrorResponse'
+      summary: Create User
+      tags:
+      - User
+swagger: "2.0"
