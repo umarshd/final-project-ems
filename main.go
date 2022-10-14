@@ -7,6 +7,7 @@ import (
 	"final-project-ems/routes"
 	"final-project-ems/usecase"
 	"net/http"
+	"os"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -72,5 +73,5 @@ func main() {
 
 	routes.Routes(e, adminHandler, productCategoryHandler, userHandler, productHandler, cartHandler, checkoutHandler)
 
-	e.Logger.Fatal(e.Start(":8000"))
+	e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
 }

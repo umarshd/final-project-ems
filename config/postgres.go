@@ -25,7 +25,6 @@ type (
 )
 
 func Database() {
-
 	dsn := dsn{
 		Host:     os.Getenv("PGHOST"),
 		User:     os.Getenv("PGUSER"),
@@ -35,6 +34,7 @@ func Database() {
 	}
 
 	db_url := "host=" + dsn.Host + " user=" + dsn.User + " password=" + dsn.Password + " dbname=" + dsn.Dbname + " port=" + dsn.Port
+
 	DB, err = gorm.Open(postgres.Open(db_url), &gorm.Config{})
 
 	if err != nil {
