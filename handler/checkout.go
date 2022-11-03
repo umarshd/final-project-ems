@@ -3,8 +3,10 @@ package handler
 import (
 	"final-project-ems/entity"
 	"final-project-ems/usecase"
+	"fmt"
 	"net/http"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
 )
 
@@ -39,6 +41,16 @@ func (handler CheckoutHandler) CreateCheckout(c echo.Context) error {
 
 	if err := c.Validate(req); err != nil {
 		return err
+	}
+
+	userId := c.Get("user").(jwt.MapClaims)["id"].(string)
+	fmt.Println(userId, "ini")
+
+	if userId != req.User_id {
+		return c.JSON(http.StatusBadRequest, &entity.ErrorResponse{
+			Status:  http.StatusBadRequest,
+			Message: "User not found",
+		})
 	}
 
 	cart, err := handler.cartUseCase.FindCartById(req.Cart_id)
